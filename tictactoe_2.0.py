@@ -154,7 +154,7 @@ def checkifwin2():
 
 
 def game():
-    for i in range(9):
+    for i in range(5):
         if i >= 3:
             checkifwin1()
             checkifwin2()
