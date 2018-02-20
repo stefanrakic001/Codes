@@ -31,7 +31,6 @@ def create_board():
         return cb
 
 
-
 def print_board(pb):
     print("#" * (len(pb[0]) * 4 + 1))
     for y in range(len(pb)):
@@ -42,6 +41,15 @@ def print_board(pb):
         print("#" * (len(row_string) - 1))
         
 
+def counter():
+    p1 = True
+    if p1:
+            print(player_1 + ": " + str(len(player1won)))
+            print(player_2 + ": " + str(len(player2won)))
+            print("Tie: " + str(len(tie)))
+        
+        
+os.system("clear")
 
 player_1, player_2 = name()
 
@@ -57,5 +65,10 @@ board = create_board()
 
 print_board(board)
 
+player1won = []
+player2won = []
+tie = []
+
+counter()
 
     
