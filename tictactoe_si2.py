@@ -1,13 +1,11 @@
+import os
+
+
 def name():
     name_1 = input("Player_1 please enter your name: ")
     name_2 = input("Player_2 please enter your name: ")
     return name_1, name_2
 
-
-
-player_1, player_2 = name()
-choice_first = []
-choice_second = []
 
 def character():
     char = True
@@ -24,6 +22,40 @@ def character():
         else:
             print("Wrong input, please choose beetween these characters --> [X/O]  ")
 
+
+def create_board():
+    x = int(input("Mekkora palyat szeretnel? "))
+    for i in range(x):
+        row = [0] * x
+        cb = [row] * x
+        return cb
+
+
+
+def print_board(pb):
+    print("#" * (len(pb[0]) * 4 + 1))
+    for y in range(len(pb)):
+        row_string = "# "
+        for x in range(len(pb[y])):
+            row_string += str(pb[y][x]) + " # "
+        print(row_string)
+        print("#" * (len(row_string) - 1))
+        
+
+
+player_1, player_2 = name()
+
+choice_first = []
+
+choice_second = []
+
 character()
 
 print (choice_first, choice_second)
+
+board = create_board()
+
+print_board(board)
+
+
+    
