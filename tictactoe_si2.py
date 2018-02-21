@@ -25,9 +25,11 @@ def character():
 
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
+    cb = []
     for i in range(x):
-        row = [0] * x
-        cb = [row] * x
+        a = [0] * x
+        table = [a] * x
+        cb.append(table)
         return cb
 
 
@@ -48,7 +50,26 @@ def counter():
             print(player_2 + ": " + str(len(player2won)))
             print("Tie: " + str(len(tie)))
         
-        
+
+def navigation():
+    p1 = True
+    while p1:
+        if p1:
+            x = input(player_1 + 'Give number of row and column please separate with a dot: ')
+            integer_1 = int(x[0])
+            integer_2 = int(x[2])
+            board[integer_1][integer_2] = 'x'
+            print_board(board)
+
+
+
+
+
+
+
+
+
+
 os.system("clear")
 
 player_1, player_2 = name()
@@ -71,4 +92,5 @@ tie = []
 
 counter()
 
+navigation()
     
