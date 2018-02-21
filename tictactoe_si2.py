@@ -25,12 +25,12 @@ def character():
 
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
+    row = [0] * x
     cb = []
     for i in range(x):
-        a = [0] * x
-        table = [a] * x
-        cb.append(table)
-        return cb
+        cb.append(list(row))
+
+    return cb
 
 
 def print_board(pb):
