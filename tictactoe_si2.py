@@ -25,17 +25,11 @@ def character():
 
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
+    row = [" "] * x
     cb = []
     for i in range(x):
-<<<<<<< HEAD
-        row = [[0]] * x
-        cb = [row] * x
-=======
-        a = [0] * x
-        table = [a] * x
-        cb.append(table)
->>>>>>> 35cc601f6e789a496c22d986060c3a35a95bbffd
-        return cb
+        cb.append(list(row))
+    return cb
 
 
 def print_board(pb):
@@ -56,54 +50,48 @@ def counter():
             print("Tie: " + str(len(tie)))
         
 
-def navigation():
-    p1 = True
-    while p1:
-        if p1:
-            x = input(player_1 + 'Give number of row and column please separate with a dot: ')
-            integer_1 = int(x[0])
-            integer_2 = int(x[2])
-            board[integer_1][integer_2] = 'x'
-            print_board(board)
+def player_1_choose():
+    x = input(player_1 + 'Give number of row and column please separate with a dot: ')
+    integer_1 = int(x[0])
+    integer_2 = int(x[2])
+    board[integer_1][integer_2] = 'X'
+    print_board(board)
+    player_2_choose()
 
 
+def player_2_choose():
+    x = input(player_2 + 'Give number of row and column please separate with a dot: ')
+    integer_1 = int(x[0])
+    integer_2 = int(x[2])
+    board[integer_1][integer_2] = 'O'
+    print_board(board)
+    player_1_choose()
 
 
-
-
-
-
+def checkwin():
 
 
 os.system("clear")
 
-#player_1, player_2 = name()
 
-#choice_first = []
+player_1, player_2 = name()
 
-#choice_second = []
+choice_first = []
 
-#character()
+choice_second = []
 
-#print (choice_first, choice_second)
+character()
 
 board = create_board()
 
 print_board(board)
 
 player1won = []
+
 player2won = []
+
 tie = []
 
-#counter()
+counter()
 
-<<<<<<< HEAD
-print(board)
-    
-board[1][1] = "X"
-
-print(board)
-=======
-navigation()
->>>>>>> 35cc601f6e789a496c22d986060c3a35a95bbffd
-    
+player_1_choose()
