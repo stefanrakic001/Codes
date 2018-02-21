@@ -25,7 +25,7 @@ def character():
 
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
-    row = [0] * x
+    row = [' '] * x
     cb = []
     for i in range(x):
         cb.append(list(row))
@@ -51,15 +51,40 @@ def counter():
             print("Tie: " + str(len(tie)))
         
 
-def navigation():
+def player_1_choose(character):
+    x = input(player_1 + ',please give number of row and column please separate with a dot: ')
+    integer_1 = int(x[0])
+    integer_2 = int(x[2])
     p1 = True
     while p1:
-        if p1:
-            x = input(player_1 + 'Give number of row and column please separate with a dot: ')
-            integer_1 = int(x[0])
-            integer_2 = int(x[2])
-            board[integer_1][integer_2] = 'x'
+        if board[integer_1][integer_2] == ' ':
+            board[integer_1][integer_2] = character
             print_board(board)
+            os.system("clear")
+            p1 = False
+            player_2_choose(choice_second[0])
+        else:
+            print('It is occupied')
+
+
+def player_2_choose(character):
+    print_board(board)
+    x = input(player_2 + ',please give number of row and column please separate with a dot: ')
+    integer_1 = int(x[0])
+    integer_2 = int(x[2])
+    p2 = True
+    while p2:
+        if board[integer_1][integer_2] == ' ':
+            board[integer_1][integer_2] = character
+            os.system("clear")
+            print_board(board)
+            p2 = False
+            player_1_choose(choice_first[0])
+            
+        else:
+            print('It is occupied')
+
+
 
 
 
@@ -91,6 +116,4 @@ player2won = []
 tie = []
 
 counter()
-
-navigation()
-    
+player_1_choose(choice_first[0])
