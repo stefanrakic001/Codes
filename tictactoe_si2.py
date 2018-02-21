@@ -51,28 +51,42 @@ def counter():
         
 
 def player_1_choose():
-    x = input(player_1 + 'Give number of row and column please separate with a dot: ')
+    x = input(player_1 + ',please give number of row and column please separate with a dot: ')
     integer_1 = int(x[0])
     integer_2 = int(x[2])
-    board[integer_1][integer_2] = 'X'
-    print_board(board)
-    player_2_choose()
-
+    p1 = True
+    while p1:
+        if board[integer_1][integer_2] == ' ':
+            board[integer_1][integer_2] = character
+            print_board(board)
+            os.system("clear")
+            p1 = False
+            player_2_choose(choice_second[0])
+        else:
+            print('It is occupied')
 
 def player_2_choose():
-    x = input(player_2 + 'Give number of row and column please separate with a dot: ')
+    print_board(board)
+    x = input(player_2 + ',please give number of row and column please separate with a dot: ')
     integer_1 = int(x[0])
     integer_2 = int(x[2])
-    board[integer_1][integer_2] = 'O'
-    print_board(board)
-    player_1_choose()
+    p2 = True
+    while p2:
+        if board[integer_1][integer_2] == ' ':
+            board[integer_1][integer_2] = character
+            os.system("clear")
+            print_board(board)
+            p2 = False
+            player_1_choose(choice_first[0])
+            
+        else:
+            print('It is occupied')
 
 
 def checkwin():
 
 
 os.system("clear")
-
 
 player_1, player_2 = name()
 
@@ -94,4 +108,4 @@ tie = []
 
 counter()
 
-player_1_choose()
+player_1_choose(choice_first[0])
