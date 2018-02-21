@@ -26,7 +26,7 @@ def character():
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
     for i in range(x):
-        row = [0] * x
+        row = [[0]] * x
         cb = [row] * x
         return cb
 
@@ -51,15 +51,15 @@ def counter():
         
 os.system("clear")
 
-player_1, player_2 = name()
+#player_1, player_2 = name()
 
-choice_first = []
+#choice_first = []
 
-choice_second = []
+#choice_second = []
 
-character()
+#character()
 
-print (choice_first, choice_second)
+#print (choice_first, choice_second)
 
 board = create_board()
 
@@ -69,6 +69,11 @@ player1won = []
 player2won = []
 tie = []
 
-counter()
+#counter()
 
+print(board)
+    
+board[1][1] = "X"
+
+print(board)
     
