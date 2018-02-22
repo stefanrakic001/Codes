@@ -52,67 +52,82 @@ def counter():
         
 
 def player_1_choose(character):
-    x = input(player_1 + ',please give number of row and column please separate with a dot: ')
-    integer_1 = int(x[0])
-    integer_2 = int(x[2])
-    p1 = True
-    while p1:
-        if board[integer_1][integer_2] == ' ':
-            board[integer_1][integer_2] = character
-            print_board(board)
-            os.system("clear")
-            p1 = False
-            player_2_choose(choice_second[0])
+    occu = True
+    while occu:
+        if check_win(player_1, choice_first[0]):
+            return
         else:
-            print('It is occupied')
+            x = input(player_1 + ',please give number of row and column please separate with a dot: ')
+            integer_1 = int(x[0])
+            integer_2 = int(x[2])
+            if board[integer_1][integer_2] == ' ':
+                board[integer_1][integer_2] = character
+                os.system("clear")
+                print_board(board)
+                player_2_choose(choice_second[0])
+                occu = False
+            else:
+                print('It is occupied')
 
 
 def player_2_choose(character):
-    print_board(board)
-    x = input(player_2 + ',please give number of row and column please separate with a dot: ')
-    integer_1 = int(x[0])
-    integer_2 = int(x[2])
-    p2 = True
-    while p2:
-        if board[integer_1][integer_2] == ' ':
-            board[integer_1][integer_2] = character
-            os.system("clear")
-            print_board(board)
-            p2 = False
-            player_1_choose(choice_first[0])
-            
+    occu = True
+    while occu:
+        if check_win(player_2, choice_second[0]):
+            return
         else:
-            print('It is occupied')
+            print_board(board)
+            x = input(player_2 + ',please give number of row and column please separate with a dot: ')
+            integer_1 = int(x[0])
+            integer_2 = int(x[2])
+            if board[integer_1][integer_2] == ' ':
+                board[integer_1][integer_2] = character
+                os.system("clear")
+                print_board(board)
+                player_1_choose(choice_first[0])
+                occu = False
+            else:
+                print('It is occupied')
 
 
-def check_win():
+def check_win(a, b):
+    char = b 
     for i in range(len(board)):
             for j in range(len(board[i])):
                 try: 
                     if 0 < j < len(board) - 1:
                         if board[i][j - 1] == char and board[i][j + 1] == char: #balra-jobbra
-                            print("1")
+                            print('baljobb')
+                            return
                 except:
                     pass
                 try:
                     if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
                         if board[i - 1][j - 1] == char and board[i + 1][j + 1] == char: #balrafol-jobbrale
-                            print("2a")
+                            print('balföljobble')
+                            return
+                            
+                            
                 except:
                     pass
                 try:
                     if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
                         if board[i - 1][j + 1] == char and board[i + 1][j - 1] == char: #balrafol-jobbrale
-                            print("2b")
+                            print('balföljobble')
+                            return
+                            
                 except:
                     pass
                 try:
                     if 0 < i < len(board) - 1:
                         if board[i + 1][j] == char and board[i - 1][j] == char: #fol-le
-                            print("3")
+                            print('fölle')
+                            return
+                            
                 except:
                     pass
-
+            
+        
 
 os.system("clear")
 
@@ -124,8 +139,6 @@ choice_second = []
 
 character()
 
-print (choice_first, choice_second)
-
 board = create_board()
 
 print_board(board)
@@ -135,4 +148,6 @@ player_2_won = []
 tie = []
 
 counter()
+
 player_1_choose(choice_first[0])
+
