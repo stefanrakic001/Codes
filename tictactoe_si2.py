@@ -46,8 +46,8 @@ def print_board(pb):
 def counter():
     p1 = True
     if p1:
-            print(player_1 + ": " + str(len(player1won)))
-            print(player_2 + ": " + str(len(player2won)))
+            print(player_1 + ": " + str(len(player_1_won)))
+            print(player_2 + ": " + str(len(player_2_won)))
             print("Tie: " + str(len(tie)))
         
 
@@ -85,14 +85,33 @@ def player_2_choose(character):
             print('It is occupied')
 
 
-
-
-
-
-
-
-
-
+def check_win():
+    for i in range(len(board)):
+            for j in range(len(board[i])):
+                try: 
+                    if 0 < j < len(board) - 1:
+                        if board[i][j - 1] == char and board[i][j + 1] == char: #balra-jobbra
+                            print("1")
+                except:
+                    pass
+                try:
+                    if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
+                        if board[i - 1][j - 1] == char and board[i + 1][j + 1] == char: #balrafol-jobbrale
+                            print("2a")
+                except:
+                    pass
+                try:
+                    if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
+                        if board[i - 1][j + 1] == char and board[i + 1][j - 1] == char: #balrafol-jobbrale
+                            print("2b")
+                except:
+                    pass
+                try:
+                    if 0 < i < len(board) - 1:
+                        if board[i + 1][j] == char and board[i - 1][j] == char: #fol-le
+                            print("3")
+                except:
+                    pass
 
 
 os.system("clear")
@@ -111,8 +130,8 @@ board = create_board()
 
 print_board(board)
 
-player1won = []
-player2won = []
+player_1_won = []
+player_2_won = []
 tie = []
 
 counter()
