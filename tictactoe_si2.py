@@ -1,6 +1,41 @@
 import os
 
 
+def current_score(filename):
+    player_score = open(filename, 'w')
+    player_score.write(str(len(player_1_won)) + '\n')
+    player_score.write(str(len(player_2_won)) + '\n')
+    player_score.write(str(len(tie)))
+    player_score.close()
+
+
+def load_score():
+    file = open('score.txt', 'r')
+    cont = file.readlines()
+    for i in range(int(cont[0][0])):
+        player_1_won.append("w")
+    for i in range(int(cont[1][0])):
+        player_2_won.append("w")
+    for i in range(int(cont[2][0])):
+        tie.append('w')
+        file.close()
+
+
+def save():
+    while True:
+        a = input('Do you want to save the score?')
+        if a == 's':
+            current_score('score.txt')
+    
+            break
+
+
+def load():
+    a = input('Do you want to load a game?--> y ')
+    if a == 'y':
+        load_score()
+
+
 def name():
     name_1 = input("Player_1 please enter your name: ")
     name_2 = input("Player_2 please enter your name: ")
@@ -25,10 +60,11 @@ def character():
 
 def create_board():
     x = int(input("Mekkora palyat szeretnel? "))
-    row = [" "] * x
+    row = [' '] * x
     cb = []
     for i in range(x):
         cb.append(list(row))
+
     return cb
 
 
@@ -45,48 +81,89 @@ def print_board(pb):
 def counter():
     p1 = True
     if p1:
-            print(player_1 + ": " + str(len(player1won)))
-            print(player_2 + ": " + str(len(player2won)))
+            print(player_1 + ": " + str(len(player_1_won)))
+            print(player_2 + ": " + str(len(player_2_won)))
             print("Tie: " + str(len(tie)))
         
 
-def player_1_choose():
-    x = input(player_1 + ',please give number of row and column please separate with a dot: ')
-    integer_1 = int(x[0])
-    integer_2 = int(x[2])
-    p1 = True
-    while p1:
-        if board[integer_1][integer_2] == ' ':
-            board[integer_1][integer_2] = character
-            print_board(board)
-            os.system("clear")
-            p1 = False
-            player_2_choose(choice_second[0])
+def player_1_choose(character):
+    occu = True
+    while occu:
+        if check_win(choice_first[0]):
+            return False
+        elif check_win(choice_second[0]):
+            return False
         else:
-            print('It is occupied')
+            x = input(player_1 + ' ,please give number of row and column please separate with a dot: ')
+            integer_1 = int(x[0])
+            integer_2 = int(x[2])
+            if board[integer_1][integer_2] == ' ':
+                board[integer_1][integer_2] = character
+                os.system("clear")
+                print_board(board)
+                occu = False
+            else:
+                print('It is occupied')
 
-def player_2_choose():
-    print_board(board)
-    x = input(player_2 + ',please give number of row and column please separate with a dot: ')
-    integer_1 = int(x[0])
-    integer_2 = int(x[2])
-    p2 = True
-    while p2:
-        if board[integer_1][integer_2] == ' ':
-            board[integer_1][integer_2] = character
-            os.system("clear")
-            print_board(board)
-            p2 = False
-            player_1_choose(choice_first[0])
-            
+
+def player_2_choose(character):
+    occu = True
+    while occu:
+        if check_win(choice_second[0]):
+            return False
+        elif check_win(choice_first[0]):
+            return False
         else:
-            print('It is occupied')
+            x = input(player_2 + ' ,please give number of row and column please separate with a dot: ')
+            integer_1 = int(x[0])
+            integer_2 = int(x[2])
+            if board[integer_1][integer_2] == ' ':
+                board[integer_1][integer_2] = character
+                os.system("clear")
+                print_board(board)
+                occu = False
+            else:
+                print('It is occupied')
 
 
-def checkwin():
-
+def check_win(a):
+    char = a
+    for i in range(len(board)):
+            for j in range(len(board[i])):
+                try: 
+                    if 0 < j < len(board) - 1:
+                        if board[i][j - 1] == char and board[i][j + 1] == char: #balra-jobbra
+                            return True
+                except IndexError:
+                    pass
+                try:
+                    if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
+                        if board[i - 1][j - 1] == char and board[i + 1][j + 1] == char: #balrafol-jobbrale
+                            return True
+                except IndexError:
+                    pass
+                try:
+                    if i > 0 and i < len(board) - 1 and j > 0 and j < len(board) - 1:
+                        if board[i - 1][j + 1] == char and board[i + 1][j - 1] == char: #jobbfölballe
+                            return True
+                except IndexError:
+                    pass
+                try:
+                    if 0 < i < len(board) - 1:
+                        if board[i + 1][j] == char and board[i - 1][j] == char: #fol-le
+                            return True
+                except IndexError:
+                    pass
+    return False
+        
 
 os.system("clear")
+
+player_1_won = []
+player_2_won = []
+tie = []
+
+load()
 
 player_1, player_2 = name()
 
@@ -100,12 +177,23 @@ board = create_board()
 
 print_board(board)
 
-player1won = []
-
-player2won = []
-
-tie = []
 
 counter()
 
-player_1_choose(choice_first[0])
+
+while True:
+    result = player_1_choose(choice_first[0])
+    if result is False:
+        print(player_1 + " you win!")
+        player_1_won.append("W")
+        counter()
+        save()
+        break
+    result = player_2_choose(choice_second[0])
+    if result is False:
+        print(player_2 + " you win!")
+        player_2_won.append("W")
+        counter()
+        save()
+        break
+
